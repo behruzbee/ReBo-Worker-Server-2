@@ -1,0 +1,28 @@
+{
+  "workers": [
+    {
+      "id": 11232,
+      "name": "Behruz",
+      "firstName": "Baxtiyorov",
+      "age": 21,
+      "position": "IT & Marketolog",
+      "hours_to_work": "12",
+      "monthly_salary": "3000000",
+      "is_working": true,
+      "monthly_worked_minutes": 9,
+      "qr_code_text": "bbc"
+    },
+    {
+      "id": 11233,
+      "name": "Farkhod",
+      "firstName": "Azlarov",
+      "age": 22,
+      "position": "Phone Master",
+      "hours_to_work": "12",
+      "monthly_salary": "4000000",
+      "is_working": false,
+      "monthly_worked_minutes": 56,
+      "qr_code_text": "ssd"
+    }
+  ]
+}
