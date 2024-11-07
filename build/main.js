@@ -1,11 +1,18 @@
 import express from 'express';
 import dotenv from 'dotenv';
+import cors from 'cors';
 import setupSwagger from './swagger.js';
 import historiesRoutes from './routes/histories-routes.js';
 import workersRoutes from './routes/workers-routes.js';
 dotenv.config();
+const corsOptions = {
+    origin: 'https://rebo-work.uz',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+};
 const app = express();
 app.use(express.json());
+app.use(cors(corsOptions));
 setupSwagger(app);
 app.use('/api', historiesRoutes);
 app.use('/api', workersRoutes);
