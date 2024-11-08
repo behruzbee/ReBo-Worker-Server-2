@@ -10,7 +10,7 @@ dotenv.config();
 
 // Настройка CORS
 const corsOptions = {
-  origin: 'https://rebo-work.uz', // Укажите домен, с которого разрешены запросы
+  origin: '*', // Укажите домен, с которого разрешены запросы
   methods: ['GET', 'POST', 'PUT', 'DELETE'], // Разрешенные методы
   allowedHeaders: ['Content-Type', 'Authorization'], // Разрешенные заголовки
 };
