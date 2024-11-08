@@ -47,7 +47,7 @@ class HistoriesService {
     return true
   }
 
-  getHistoriesByWorkerId(workerId: number): IHistory[] {
+  getHistoriesByWorkerId(workerId: string): IHistory[] {
     const histories = this.readData()
     return histories.filter((history) => history.worker_id === workerId)
   }
@@ -64,7 +64,7 @@ class HistoriesService {
   }
 
   // Метод для получения истории по работнику
-  private getHistoryEntryForWorker(workerId: number): IHistory[] {
+  private getHistoryEntryForWorker(workerId: string): IHistory[] {
     const histories = this.readData()
     return histories.filter((history) => history.worker_id === workerId)
   }

@@ -77,7 +77,7 @@ router.get('/workers/:id', (req: Request<{ id: string }>, res: Response) => {
     return res.status(400).json({ error: 'Invalid worker ID' });
   }
 
-  const worker = workersService.getWorkerById(Number(req.params.id));
+  const worker = workersService.getWorkerById(req.params.id);
   if (worker) {
     res.json(worker);
   } else {
@@ -156,14 +156,14 @@ router.put('/workers/:id', (req: Request<{ id: string }, {}, Partial<IWorker>>, 
   }
 
   const updatedData = req.body;
-  const errors = validateWorker({ ...updatedData, id: Number(req.params.id) } as IWorker);
+  const errors = validateWorker({ ...updatedData, id: req.params.id } as IWorker);
 
   if (errors.length > 0) {
     return res.status(400).json({ errors });
   }
 
   try {
-    const updatedWorker = workersService.updateWorker(Number(req.params.id), updatedData);
+    const updatedWorker = workersService.updateWorker(req.params.id, updatedData);
     if (updatedWorker) {
       res.json(updatedWorker);
     } else {
@@ -203,7 +203,7 @@ router.delete('/workers/:id', (req: Request<{ id: string }>, res: Response) => {
   }
 
   try {
-    const success = workersService.deleteWorker(Number(req.params.id));
+    const success = workersService.deleteWorker(req.params.id);
     if (success) {
       res.status(204).send();
     } else {

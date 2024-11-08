@@ -1,5 +1,5 @@
 export interface IWorker {
-  id: number
+  id: string
   name: string
   firstName: string
   age: number

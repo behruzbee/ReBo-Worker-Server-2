@@ -113,7 +113,7 @@ router.get('/histories/worker/:workerId', (req: Request<{ workerId: string }>, r
   }
 
   try {
-    const histories = historiesService.getHistoriesByWorkerId(Number(workerId));
+    const histories = historiesService.getHistoriesByWorkerId(workerId);
 
     if (histories.length > 0) {
       res.json(histories);

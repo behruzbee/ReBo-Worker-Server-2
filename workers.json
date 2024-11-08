@@ -1,0 +1,76 @@
+{
+  "workers": [
+    {
+      "id": 1731077328270,
+      "name": "John",
+      "firstName": "Doe",
+      "age": 30,
+      "position": "Technician",
+      "hours_to_work": "8",
+      "monthly_salary": "3000000",
+      "is_working": true,
+      "monthly_worked_minutes": 0,
+      "qr_code_text": "exampleQR"
+    },
+    {
+      "id": 1731077555391,
+      "name": "John",
+      "firstName": "Doe",
+      "age": 30,
+      "position": "Technician",
+      "hours_to_work": "8",
+      "monthly_salary": "3000000",
+      "is_working": true,
+      "monthly_worked_minutes": 0,
+      "qr_code_text": "exampleQR"
+    },
+    {
+      "id": "72cc8091-b3b8-41e9-9da9-dd66f814fb89",
+      "name": "asdasd",
+      "firstName": "Behruz",
+      "age": 3,
+      "position": "Marketolog",
+      "hours_to_work": "21312",
+      "monthly_salary": "123123",
+      "is_working": false,
+      "monthly_worked_minutes": 0,
+      "qr_code_text": "123123123"
+    },
+    {
+      "id": "698900a7-4958-4e6f-a162-da85809694ea",
+      "name": "asdasdsa",
+      "firstName": "Asadbek",
+      "age": 26,
+      "position": "Marketolog",
+      "monthly_salary": "223",
+      "monthly_worked_minutes": 0,
+      "qr_code_text": "qrsss2",
+      "hours_to_work": "12",
+      "is_working": false
+    },
+    {
+      "id": "55aa8714-7c08-45b6-9e00-102a35ff598b",
+      "name": "asdasdsa",
+      "firstName": "Asadbek",
+      "age": 2322,
+      "position": "Marketolog",
+      "monthly_salary": "123123123",
+      "monthly_worked_minutes": 0,
+      "qr_code_text": "qrsss223",
+      "hours_to_work": 12213,
+      "is_working": false
+    },
+    {
+      "id": "c4b8a81e-2449-4afe-bb50-cbb7bdd1f2cd",
+      "name": "asdasd",
+      "firstName": "sadasdas",
+      "age": 21321,
+      "position": "asdasdas",
+      "monthly_salary": 12312312,
+      "monthly_worked_minutes": 0,
+      "qr_code_text": "asdasd",
+      "hours_to_work": 123,
+      "is_working": false
+    }
+  ]
+}

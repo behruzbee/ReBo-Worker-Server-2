@@ -6,7 +6,7 @@ import historiesRoutes from './routes/histories-routes.js';
 import workersRoutes from './routes/workers-routes.js';
 dotenv.config();
 const corsOptions = {
-    origin: 'https://rebo-work.uz',
+    origin: '*',
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
 };

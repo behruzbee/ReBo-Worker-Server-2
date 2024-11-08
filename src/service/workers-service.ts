@@ -30,7 +30,7 @@ class WorkerService {
   }
 
   // Получить работника по ID
-  getWorkerById(id: number): IWorker | undefined {
+  getWorkerById(id: string): IWorker | undefined {
     const workers = this.readData()
     return workers.find((worker) => worker.id === id)
   }
@@ -44,7 +44,7 @@ class WorkerService {
   }
 
   // Обновить информацию о работнике
-  updateWorker(id: number, updatedData: Partial<IWorker>): IWorker | null {
+  updateWorker(id: string, updatedData: Partial<IWorker>): IWorker | null {
     const workers = this.readData()
     const index = workers.findIndex((worker) => worker.id === id)
     if (index === -1) {
@@ -57,7 +57,7 @@ class WorkerService {
   }
 
   // Удалить работника по ID
-  deleteWorker(id: number): boolean {
+  deleteWorker(id: string): boolean {
     let workers = this.readData()
     const index = workers.findIndex((worker) => worker.id === id)
     if (index === -1) {
@@ -75,7 +75,7 @@ class WorkerService {
   }
 
   // Метод для обновления статуса работника
-  updateWorkerStatus(id: number, isWorking: boolean): IWorker | undefined {
+  updateWorkerStatus(id: string, isWorking: boolean): IWorker | undefined {
     const workers = this.readData()
     const worker = workers.find((worker) => worker.id === id)
     if (!worker) return undefined
@@ -87,7 +87,7 @@ class WorkerService {
 
   // Метод для обновления ежемесячных минут
   updateWorkerMonthlyMinutes(
-    id: number,
+    id: string,
     additionalMinutes: number
   ): IWorker | undefined {
     const workers = this.readData()
