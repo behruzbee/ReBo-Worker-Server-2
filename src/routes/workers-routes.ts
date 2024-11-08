@@ -5,8 +5,6 @@ import { IWorker } from '../types/workers-type.js';
 const router = Router();
 const workersService = new WorkersService('./workers.json');
 
-// Проверка валидности ID
-const isValidId = (id: string): boolean => !isNaN(Number(id));
 
 // Проверка обязательных полей работника
 const validateWorker = (worker: IWorker): string[] => {
@@ -73,10 +71,6 @@ router.get('/workers', (req: Request, res: Response) => {
  */
 // @ts-ignore
 router.get('/workers/:id', (req: Request<{ id: string }>, res: Response) => {
-  if (!isValidId(req.params.id)) {
-    return res.status(400).json({ error: 'Invalid worker ID' });
-  }
-
   const worker = workersService.getWorkerById(req.params.id);
   if (worker) {
     res.json(worker);
@@ -151,10 +145,6 @@ router.post('/workers', (req: Request<{}, {}, IWorker>, res: Response) => {
  */
 // @ts-ignore
 router.put('/workers/:id', (req: Request<{ id: string }, {}, Partial<IWorker>>, res: Response) => {
-  if (!isValidId(req.params.id)) {
-    return res.status(400).json({ error: 'Invalid worker ID' });
-  }
-
   const updatedData = req.body;
   const errors = validateWorker({ ...updatedData, id: req.params.id } as IWorker);
 
@@ -198,10 +188,6 @@ router.put('/workers/:id', (req: Request<{ id: string }, {}, Partial<IWorker>>, 
  */
 // @ts-ignore
 router.delete('/workers/:id', (req: Request<{ id: string }>, res: Response) => {
-  if (!isValidId(req.params.id)) {
-    return res.status(400).json({ error: 'Invalid worker ID' });
-  }
-
   try {
     const success = workersService.deleteWorker(req.params.id);
     if (success) {
