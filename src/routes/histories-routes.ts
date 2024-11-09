@@ -108,10 +108,9 @@ router.get('/histories', (req: Request, res: Response) => {
 router.get('/histories/worker/:workerId', (req: Request<{ workerId: string }>, res: Response) => {
   const workerId = req.params.workerId;
 
-  if (!workerId || isNaN(Number(workerId))) {
+  if (!workerId) {
     return res.status(400).json({ error: 'Некорректный ID работника' });
   }
-
   try {
     const histories = historiesService.getHistoriesByWorkerId(workerId);
 
