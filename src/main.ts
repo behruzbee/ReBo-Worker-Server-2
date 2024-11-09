@@ -5,6 +5,7 @@ import setupSwagger from './swagger.js';
 
 import historiesRoutes from './routes/histories-routes.js'
 import workersRoutes from './routes/workers-routes.js'
+import penaltyRoutes from './routes/penalty-routes.js'
 
 dotenv.config();
 
@@ -23,6 +24,7 @@ app.use(cors(corsOptions));
 setupSwagger(app);
 
 app.use('/api', historiesRoutes);
+app.use('/api', penaltyRoutes);
 app.use('/api', workersRoutes);
 
 const PORT = process.env.PORT || 3000

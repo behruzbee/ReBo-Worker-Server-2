@@ -1,3 +1,5 @@
+import { IPenalty } from "./penalty-type.js"
+
 export interface IWorker {
   id: string
   name: string
@@ -9,4 +11,5 @@ export interface IWorker {
   is_working: boolean
   monthly_worked_minutes: number
   qr_code_text: string
+  penalties: IPenalty[]
 }

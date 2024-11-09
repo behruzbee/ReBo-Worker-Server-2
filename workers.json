@@ -1,16 +1,1 @@
-{
-  "workers": [
-    {
-      "id": "65e120c5-1f88-4aa6-98bf-63629a11ddd5",
-      "name": "Baxtiyorov",
-      "firstName": "Behruz",
-      "age": 19,
-      "position": "IT & MARKETOLOG",
-      "monthly_salary": 3500000,
-      "monthly_worked_minutes": 0,
-      "qr_code_text": "bbc",
-      "hours_to_work": "12",
-      "is_working": true
-    }
-  ]
-}
+{}
