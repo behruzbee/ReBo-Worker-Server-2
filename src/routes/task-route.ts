@@ -193,44 +193,76 @@ router.delete('/task/:taskId', (req: Request, res: Response) => {
 
 /**
  * @swagger
- * /api/task/{taskId}/complete:
+ * /api/complete/{taskId}:
  *   post:
- *     description: Mark a task as completed by a worker
+ *     summary: Mark a task as completed by a worker
+ *     description: Marks a specific task as completed by a specified worker.
  *     parameters:
  *       - name: taskId
  *         in: path
- *         description: Task ID to mark as completed
+ *         description: Unique identifier of the task to be marked as completed
  *         required: true
- *         type: string
- *       - name: workerId
- *         in: body
- *         description: Worker ID who completed the task
- *         required: true
- *         type: string
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       description: JSON object containing the workerId
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               workerId:
+ *                 type: string
+ *                 description: ID of the worker completing the task
  *     responses:
  *       200:
- *         description: Task marked as completed
+ *         description: Task successfully marked as completed
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Task marked as completed
  *       400:
  *         description: Missing required fields
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: workerId is required
  *       404:
  *         description: Task or worker not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: Task or worker not found
  */
 //@ts-ignore
-router.post('/task/:taskId/complete', (req: Request, res: Response) => {
-  const { workerId } = req.body;
-  const { taskId } = req.params;
-
-  if (!workerId) {
-    return res.status(400).json({ error: 'workerId is required' });
-  }
-
-  const success = tasksService.completeTask(workerId, taskId);
-
-  if (success) {
-    res.json({ message: 'Task marked as completed' });
-  } else {
-    res.status(404).json({ error: 'Task or worker not found' });
-  }
-});
+router.post('/complete/:taskId', (req: Request, res: Response) => {
+    const { workerId } = req.body;
+    const { taskId } = req.params;
+  
+    if (!workerId) {
+      return res.status(400).json({ error: 'workerId is required' });
+    }
+  
+    const success = tasksService.completeTask(workerId, taskId);
+  
+    if (success) {
+      res.json({ message: 'Task marked as completed' });
+    } else {
+      res.status(404).json({ error: 'Task or worker not found' });
+    }
+  });
 
 export default router;
