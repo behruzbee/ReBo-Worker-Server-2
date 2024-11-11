@@ -1,2 +1,6 @@
 node_modules
 build/**
+workers.json
+penalties.json
+histories.json
+task-market.json
