@@ -6,6 +6,7 @@ import setupSwagger from './swagger.js';
 import historiesRoutes from './routes/histories-routes.js'
 import workersRoutes from './routes/workers-routes.js'
 import penaltyRoutes from './routes/penalty-routes.js'
+import taskRoutes from './routes/task-route.js'
 
 dotenv.config();
 
@@ -26,6 +27,7 @@ setupSwagger(app);
 app.use('/api', historiesRoutes);
 app.use('/api', penaltyRoutes);
 app.use('/api', workersRoutes);
+app.use('/api', taskRoutes);
 
 const PORT = process.env.PORT || 3000
 
