@@ -6,8 +6,8 @@ import { taskSchema } from '../model/taskSchema.js';
 import { ITask } from '../types/task-types.js';
 
 const router = Router();
-const workerService = new WorkerService('./database/workers.json')
-const tasksService = new TasksService('./database/tasks-market.json', workerService);
+const workerService = new WorkerService('./workers.json')
+const tasksService = new TasksService('./tasks.json', workerService);
 
 router.post('/tasks', (req: Request, res: Response) => {
   const task = req.body;

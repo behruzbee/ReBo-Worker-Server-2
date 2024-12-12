@@ -5,8 +5,8 @@ import WorkersService from '../service/workers-service.js';
 import { penaltySchema } from '../model/penaltySchema.js';
 
 const router = Router();
-const workersService = new WorkersService('./database/workers.json');
-const penaltiesService = new PenaltiesService('./database/penalties.json', workersService);
+const workersService = new WorkersService('./workers.json');
+const penaltiesService = new PenaltiesService('./penalties.json', workersService);
 // @ts-ignore
 router.post('/penalty', (req: Request, res: Response) => {
   const newPenalty = req.body;

@@ -4,7 +4,7 @@ import { IWorker } from '../types/worker-type.js';
 import { workerSchema } from '../model/workerSchema.js';
 
 const router = Router();
-const workersService = new WorkersService('./database/workers.json');
+const workersService = new WorkersService('./workers.json');
 
 router.get('/workers', (req: Request, res: Response) => {
   try {

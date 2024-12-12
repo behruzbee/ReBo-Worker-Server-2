@@ -20,6 +20,7 @@ app.use('/api', historiesRoutes);
 app.use('/api', penaltyRoutes);
 app.use('/api', workersRoutes);
 app.use('/api', taskRoutes);
+app.use('/api', taskRoutes);
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);

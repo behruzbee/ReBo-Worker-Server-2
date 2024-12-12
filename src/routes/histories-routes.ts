@@ -6,9 +6,9 @@ import { v4 as uuidV4 } from 'uuid'
 import { historySchema } from '../model/historySchema.js'
 
 const router = Router()
-const workersService = new WorkersService('./database/workers.json')
+const workersService = new WorkersService('./workers.json')
 const historiesService = new HistoriesService(
-  './database/histories.json',
+  './histories.json',
   workersService
 )
 // @ts-ignore
