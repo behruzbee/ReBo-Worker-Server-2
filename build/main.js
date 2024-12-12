@@ -9,7 +9,7 @@ import taskRoutes from './routes/task-route.js';
 dotenv.config();
 const corsOptions = {
     origin: '*',
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    methods: ['GET', 'POST', 'PATCH', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
 };
 const app = express();

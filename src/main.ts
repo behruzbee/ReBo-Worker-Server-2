@@ -12,9 +12,9 @@ dotenv.config();
 
 // Настройка CORS
 const corsOptions = {
-  origin: '*', // Укажите домен, с которого разрешены запросы
-  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Разрешенные методы
-  allowedHeaders: ['Content-Type', 'Authorization'], // Разрешенные заголовки
+  origin: '*', 
+  methods: ['GET', 'POST', 'PATCH', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
 };
 
 const app = express()

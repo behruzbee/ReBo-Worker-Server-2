@@ -1,7 +1,6 @@
-import { IHistory } from '../types/histories-type.js'
+import { IHistory } from '../types/history-type.js'
 import WorkersService from './workers-service.js'
 import fs from 'fs'
-import path from 'path'
 
 class HistoriesService {
   private dbFilePath: string
@@ -14,36 +13,31 @@ class HistoriesService {
 
   // Метод для добавления истории работы и обновления статуса работника
   addHistory(newHistory: IHistory): boolean {
-    const scanTime = new Date().toISOString()
-
     // Сначала пытаемся найти работника по ID
-    let worker = this.workersService.getWorkerById(newHistory.worker_id) && this.workersService.getWorkerByQrCode(newHistory.qr_code_text)
+    let worker = this.workersService.getWorkerById(newHistory.worker_id)
 
-    // Если работник не найден ни по ID, ни по qr_code_text
+    // Если работник не найден по ID
     if (!worker) {
       return false
     }
 
-    const workerIsWorking = worker.is_working
+    const status_working = newHistory.status_type === 'enter' ? 'working' : 'not_working'
 
-    if (workerIsWorking) {
-      // Добавляем историю о начале работы
-      const historyEntry = { ...newHistory, scan_time: scanTime }
-      this.addHistoryEntry(historyEntry)
-      this.workersService.updateWorkerStatus(worker.id, false)
-    } else {
-      // Добавляем историю о завершении работы
-      const historyEntry = { ...newHistory, scan_time: scanTime }
-      this.addHistoryEntry(historyEntry)
-      const historyEntryForWorkTime = this.getHistoryEntryForWorker(worker.id)
-      const workStartTime = new Date(historyEntryForWorkTime[0].scan_time)
-      const workEndTime = new Date(scanTime)
-      const workMinutes = this.calculateWorkMinutes(workStartTime, workEndTime)
+    this.addHistoryEntry(newHistory)
+    this.workersService.updateWorkerStatus(worker.id, status_working)
 
-      this.workersService.updateWorkerStatus(worker.id, true)
-      this.workersService.updateWorkerMonthlyMinutes(worker.id, workMinutes)
+    return true
+  }
+
+  deleteHistory(historyId: string) {
+    const histories = this.readData()
+    const filteredHistory = histories.filter(
+      (history) => history.id !== historyId
+    )
+    this.writeData(filteredHistory)
+    if (histories.length === filteredHistory.length) {
+      return false
     }
-
     return true
   }
 
@@ -61,18 +55,6 @@ class HistoriesService {
     const histories = this.readData()
     histories.push(history)
     this.writeData(histories)
-  }
-
-  // Метод для получения истории по работнику
-  private getHistoryEntryForWorker(workerId: string): IHistory[] {
-    const histories = this.readData()
-    return histories.filter((history) => history.worker_id === workerId)
-  }
-
-  // Метод для расчета времени работы в минутах
-  private calculateWorkMinutes(start: Date, end: Date): number {
-    const difference = end.getTime() - start.getTime()
-    return Math.floor(difference / (1000 * 60)) // Конвертируем из миллисекунд в минуты
   }
 
   // Прочие методы (например, для чтения или записи данных)

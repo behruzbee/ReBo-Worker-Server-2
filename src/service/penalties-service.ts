@@ -2,7 +2,6 @@ import { v4 as uuidv4 } from 'uuid'
 import { IPenalty } from '../types/penalty-type.js'
 import WorkersService from './workers-service.js'
 import fs from 'fs'
-import path from 'path'
 
 class PenaltiesService {
   private dbFilePath: string
@@ -15,11 +14,6 @@ class PenaltiesService {
 
   // Метод для добавления штрафа и обновления информации о работнике
   addPenalty(newPenalty: IPenalty): boolean {
-    const penaltyTime = new Date().toISOString()
-
-    // Generate a unique ID using uuid
-    const penaltyId = uuidv4()
-
     // Сначала пытаемся найти работника по ID
     let worker = this.workersService.getWorkerById(newPenalty.worker_id)
 
@@ -29,18 +23,17 @@ class PenaltiesService {
     }
 
     // Добавляем штраф в историю работника
-    const penaltyEntry = { ...newPenalty, id: penaltyId, time: penaltyTime }
-    this.addPenaltyEntry(penaltyEntry)
+    this.addPenaltyEntry(newPenalty)
 
     return true
   }
 
   // Метод для удаления штрафа
   deletePenalty(id: string): boolean {
-    let penalties = this.readData()
-    penalties = penalties.filter((penalty) => penalty.id !== id)
+    const penalties = this.readData()
+    const updatedPenalties = penalties.filter((penalty) => penalty.id !== id)
 
-    if (penalties.length === this.readData().length) {
+    if (updatedPenalties.length === penalties.length) {
       return false
     }
 

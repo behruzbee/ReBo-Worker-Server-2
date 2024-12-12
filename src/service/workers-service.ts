@@ -1,6 +1,6 @@
 import fs from 'fs'
 import path from 'path'
-import { IWorker } from '../types/workers-type.js'
+import { IWorker } from '../types/worker-type.js'
 
 class WorkerService {
   private dbFilePath: string
@@ -9,7 +9,6 @@ class WorkerService {
     this.dbFilePath = dbFilePath
   }
 
-  // Метод для чтения данных из JSON файла
   private readData(): IWorker[] {
     if (!fs.existsSync(this.dbFilePath)) {
       return []
@@ -18,7 +17,6 @@ class WorkerService {
     return JSON.parse(rawData).workers || []
   }
 
-  // Метод для записи данных в JSON файл
   private writeData(workers: IWorker[]): void {
     const data = { workers }
     fs.writeFileSync(this.dbFilePath, JSON.stringify(data, null, 2))
@@ -75,12 +73,12 @@ class WorkerService {
   }
 
   // Метод для обновления статуса работника
-  updateWorkerStatus(id: string, isWorking: boolean): IWorker | undefined {
+  updateWorkerStatus(id: string, status_working: 'working' | 'not_working'): IWorker | undefined {
     const workers = this.readData()
     const worker = workers.find((worker) => worker.id === id)
     if (!worker) return undefined
 
-    worker.is_working = isWorking
+    worker.status_working = status_working
     this.writeData(workers)
     return worker
   }

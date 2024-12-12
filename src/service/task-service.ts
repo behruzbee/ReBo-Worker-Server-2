@@ -1,17 +1,7 @@
 import fs from 'fs'
-import path from 'path'
 import { v4 as uuidv4 } from 'uuid'
+import { ITask } from '../types/task-types.js'
 import WorkerService from './workers-service.js' // Adjust the path to your WorkerService
-
-export interface ITask {
-  id: string // Unique task identifier
-  store_name: string // Store or location of the task
-  description: string // Task description
-  completed_by?: string // Worker who completed the task (if completed)
-  completed_at?: string // Completion timestamp
-  created_at: string // Task creation timestamp
-  status: 'pending' | 'completed' // Task status (pending or completed)
-}
 
 class TasksService {
   private dbFilePath: string
@@ -23,18 +13,11 @@ class TasksService {
   }
 
   // Create a new task
-  createTask(description: string, storeName: string): ITask {
+  createTask(newTask: ITask) {
     const tasks = this.readData()
-    const newTask: ITask = {
-      id: uuidv4(),
-      description,
-      store_name: storeName,
-      created_at: new Date().toISOString(),
-      status: 'pending'
-    }
     tasks.push(newTask)
     this.writeData(tasks)
-    return newTask
+    return true
   }
 
   // Get all tasks
@@ -48,63 +31,62 @@ class TasksService {
     return tasks.filter((task) => task.store_name === storeName)
   }
 
-  // Get a specific task by ID
-  getTaskById(taskId: string): ITask | undefined {
-    const tasks = this.readData()
-    return tasks.find((task) => task.id === taskId)
-  }
-
+  
   // Update task description and/or store name
   updateTask(
     taskId: string,
-    description?: string,
-    storeName?: string
+    task: ITask
   ): ITask | null {
     const tasks = this.readData()
-    const taskIndex = tasks.findIndex((task) => task.id === taskId)
-
-    if (taskIndex === -1) return null
-
-    if (description) tasks[taskIndex].description = description
-    if (storeName) tasks[taskIndex].store_name = storeName
-
+    const index = tasks.findIndex((task) => task.id === taskId)
+    if (index === -1) {
+      return null
+    }
+    const updatedTask = { ...tasks[index], ...task }
+    tasks[index] = updatedTask
     this.writeData(tasks)
-    return tasks[taskIndex]
+    return task
   }
-
+  
   // Delete a task by ID
   deleteTask(taskId: string): boolean {
     const tasks = this.readData()
     const updatedTasks = tasks.filter((task) => task.id !== taskId)
 
     if (updatedTasks.length === tasks.length) return false // Task not found
-
+    
     this.writeData(updatedTasks)
     return true
   }
-
+  
   // Mark a task as completed
   completeTask(workerId: string, taskId: string): boolean {
     const tasks = this.readData()
     const task = tasks.find((task) => task.id === taskId)
-
+    
     if (!task) {
       return false // Task not found
     }
-
+    
     const worker = this.workerService.getWorkerById(workerId)
     if (!worker) {
       return false // Worker not found
     }
-
-    task.completed_by = `${worker.name} ${worker.firstName}`
+    
+    task.completed_by = `${worker.name} ${worker.lastName}`
     task.completed_at = new Date().toISOString()
     task.status = 'completed'
-
+    
     this.writeData(tasks)
     return true
   }
 
+  // Get a specific task by ID
+  private getTaskById(taskId: string): ITask | undefined {
+    const tasks = this.readData()
+    return tasks.find((task) => task.id === taskId)
+  }
+  
   // Read tasks from the file
   private readData(): ITask[] {
     if (!fs.existsSync(this.dbFilePath)) {

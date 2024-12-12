@@ -1,60 +1,24 @@
 import { Router, Request, Response } from 'express';
+import {v4 as uuidV4} from 'uuid'
 import PenaltiesService from '../service/penalties-service.js';
 import WorkersService from '../service/workers-service.js';
+import { penaltySchema } from '../model/penaltySchema.js';
 
 const router = Router();
-const workersService = new WorkersService('./workers.json');
-const penaltiesService = new PenaltiesService('./penalties.json', workersService);
-
-/**
- * @swagger
- * /api/penalties:
- *   post:
- *     summary: Add a new penalty to a worker
- *     description: Adds a new penalty entry to a worker's record.
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               worker_id:
- *                 type: string
- *                 description: The worker's ID
- *               description:
- *                 type: string
- *                 description: The description of the penalty
- *               amount:
- *                 type: number
- *                 description: The penalty amount
- *               time:
- *                 type: string
- *                 format: date-time
- *                 description: The time the penalty was issued
- *     responses:
- *       200:
- *         description: Successfully added penalty
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   description: Message describing the result of the action
- *       400:
- *         description: Bad request, missing required fields
- *       404:
- *         description: Worker not found
- */
+const workersService = new WorkersService('./database/workers.json');
+const penaltiesService = new PenaltiesService('./database/penalties.json', workersService);
 // @ts-ignore
-router.post('/penalties', (req: Request, res: Response) => {
+router.post('/penalty', (req: Request, res: Response) => {
   const newPenalty = req.body;
 
-  if (!newPenalty.worker_id || !newPenalty.description || !newPenalty.amount || !newPenalty.time) {
-    return res.status(400).json({ message: 'Missing required fields' });
+  const result = penaltySchema.safeParse(newPenalty)
+
+  if (!result.success) {
+    return res.status(400).json({ errors: result.error.errors });
   }
+
+  newPenalty['id'] = uuidV4()
+  newPenalty['time'] = new Date().toISOString()
 
   const addedPenalty = penaltiesService.addPenalty(newPenalty);
   if (addedPenalty) {
@@ -64,26 +28,7 @@ router.post('/penalties', (req: Request, res: Response) => {
   }
 });
 
-/**
- * @swagger
- * /api/penalties/{penaltyId}:
- *   delete:
- *     summary: Delete a penalty by ID
- *     description: Deletes a penalty entry by its ID.
- *     parameters:
- *       - in: path
- *         name: penaltyId
- *         required: true
- *         description: The ID of the penalty to be deleted
- *         schema:
- *           type: string
- *     responses:
- *       200:
- *         description: Successfully deleted penalty
- *       404:
- *         description: Penalty not found
- */
-router.delete('/penalties/:penaltyId', (req: Request<{ penaltyId: string }>, res: Response) => {
+router.delete('/penalty/:penaltyId', (req: Request<{ penaltyId: string }>, res: Response) => {
   const penaltyId = req.params.penaltyId;
 
   const deletedPenalty = penaltiesService.deletePenalty(penaltyId);
@@ -94,18 +39,6 @@ router.delete('/penalties/:penaltyId', (req: Request<{ penaltyId: string }>, res
   }
 });
 
-/**
- * @swagger
- * /api/penalties:
- *   get:
- *     summary: Get all penalties
- *     description: Fetches a list of all penalties.
- *     responses:
- *       200:
- *         description: A list of all penalties
- *       500:
- *         description: Failed to fetch penalties
- */
 router.get('/penalties', (req: Request, res: Response) => {
   try {
     const penalties = penaltiesService.getPenalties();
@@ -114,25 +47,6 @@ router.get('/penalties', (req: Request, res: Response) => {
     res.status(500).json({ error: 'Failed to fetch penalties' });
   }
 });
-
-/**
- * @swagger
- * /api/penalties/worker/{workerId}:
- *   get:
- *     summary: Get penalties by worker ID
- *     parameters:
- *       - in: path
- *         name: workerId
- *         required: true
- *         description: The ID of the worker
- *         schema:
- *           type: string
- *     responses:
- *       200:
- *         description: A list of penalties for the specified worker
- *       404:
- *         description: No penalties found for the worker
- */
 // @ts-ignore
 router.get('/penalties/worker/:workerId', (req: Request<{ workerId: string }>, res: Response) => {
   const workerId = req.params.workerId;

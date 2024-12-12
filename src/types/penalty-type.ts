@@ -3,5 +3,5 @@ export interface IPenalty {
   worker_id: string
   description: string
   amount: number
-  time: string // format new Date()
+  time: string 
 }
