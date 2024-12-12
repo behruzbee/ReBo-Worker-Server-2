@@ -6,11 +6,12 @@ import historiesRoutes from './routes/histories-routes.js';
 import workersRoutes from './routes/workers-routes.js';
 import penaltyRoutes from './routes/penalty-routes.js';
 import taskRoutes from './routes/task-route.js';
+import bonusRoutes from './routes/bonus-routes.js';
 dotenv.config();
 const corsOptions = {
     origin: '*',
     methods: ['GET', 'POST', 'PATCH', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
+    allowedHeaders: ['Content-Type', 'Authorization']
 };
 const app = express();
 app.use(express.json());
@@ -20,7 +21,7 @@ app.use('/api', historiesRoutes);
 app.use('/api', penaltyRoutes);
 app.use('/api', workersRoutes);
 app.use('/api', taskRoutes);
-app.use('/api', taskRoutes);
+app.use('/api', bonusRoutes);
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
