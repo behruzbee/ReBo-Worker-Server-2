@@ -48,6 +48,13 @@ router.post('/sign-up', (req: Request, res: Response) => {
     if (!result.success)
       return res.status(400).json({ errors: result.error.errors })
 
+    const user = userService.getUserByUsername(newUser.username)
+    if (user) {
+      return res
+        .status(403)
+        .json({ error: "username ishlatilgan!" })
+    }
+
     const hashPassword = bcrypt.hashSync(newUser.password, 10)
 
     const preparedUser: IUser = {

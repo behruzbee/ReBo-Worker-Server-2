@@ -1,0 +1,11 @@
+{
+  "users": [
+    {
+      "id": "76a3cdd2-f400-4905-9585-05224c47c3e6",
+      "username": "bobur.teleganov",
+      "password": "$2b$10$h.qtUjgT2sbfF20pvRrwxeC24sAQTc2YQn3gA7mzeu5W8qHAWU5qm",
+      "status_index": 0,
+      "created_at": "2024-12-15T18:49:15.685Z"
+    }
+  ]
+}
