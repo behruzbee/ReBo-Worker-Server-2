@@ -7,7 +7,6 @@ import UserService from '../service/users-service.js'
 import { authSchema } from '../model/authSchema.js'
 import { userSchema } from '../model/userSchema.js'
 import { IUser } from '../types/user-type.js'
-import { SECRET_KEY } from '../helpers/checkToken.js'
 
 const router = Router()
 const userService = new UserService('./users.json')
@@ -33,7 +32,7 @@ router.post('/login', (req: Request, res: Response) => {
         .status(403)
         .json({ error: "username yoki password noto'g'ri!" })
 
-    const token = jwt.sign(user, SECRET_KEY, { expiresIn: '1h' })
+    const token = jwt.sign(user, process.env.JWT_SECRET_KEY || '', { expiresIn: '1h' })
     return res.status(201).json({ token })
   } catch (error) {
     res.status(500).json({ error: 'Failed to login user' })
@@ -65,7 +64,7 @@ router.post('/sign-up', (req: Request, res: Response) => {
       created_at: new Date().toISOString()
     }
     userService.addUser(preparedUser)
-    const token = jwt.sign(preparedUser, SECRET_KEY, { expiresIn: '1h' })
+    const token = jwt.sign(preparedUser, process.env.JWT_SECRET_KEY || '', { expiresIn: '1h' })
     return res.status(201).json({ token })
   } catch (error) {
     res.status(500).json({ error: 'Failed to sign-up user' })

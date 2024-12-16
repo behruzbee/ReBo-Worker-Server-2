@@ -1,8 +1,6 @@
 import jwt from 'jsonwebtoken';
 import { Request, Response, NextFunction } from 'express';
 
-export const SECRET_KEY = '11997733';
-
 function checkToken(req: Request, res: Response, next: NextFunction) {
   try {
     const token = req.headers.authorization?.split(' ')[1];
@@ -10,7 +8,7 @@ function checkToken(req: Request, res: Response, next: NextFunction) {
       return res.status(401).json({ error: 'Токен не предоставлен!' });
     }
 
-    const decoded = jwt.verify(token, SECRET_KEY);
+    const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY || '');
     // @ts-ignore
     req.user = decoded;
 
