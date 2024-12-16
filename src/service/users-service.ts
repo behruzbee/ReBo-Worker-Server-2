@@ -40,7 +40,7 @@ class UserService {
   }
 
   // Обновить информация о пользователя
-  updateWorker(username: string, updatedData: IUser): IUser | null {
+  updateUser(username: string, updatedData: IUser): IUser | null {
     const users = this.readData()
     const index = users.findIndex((user) => user.username === username)
     if (index === -1) {
@@ -53,7 +53,7 @@ class UserService {
   }
 
   // Удалить пользователя по username
-  deleteWorker(username: string): boolean {
+  deleteUser(username: string): boolean {
     let users = this.readData()
     const index = users.findIndex((user) => user.username === username)
     if (index === -1) {
