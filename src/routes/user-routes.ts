@@ -118,8 +118,11 @@ router.patch(
       if (!result.success) {
         return res.status(403).json({ errors: result.error.errors })
       }
-
-      const user = userService.updateUser(username, updatedUser)
+      const preparedUser = {
+        ...updatedUser,
+        password: bcrypt.hashSync(updatedUser.password, 10)
+      }
+      const user = userService.updateUser(username, preparedUser)
       if (!user) {
         return res.status(403).json({ error: 'Foydalanuvchi topilmadi' })
       }

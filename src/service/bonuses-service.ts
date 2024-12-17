@@ -32,7 +32,7 @@ class BonusesService {
       return false
     }
 
-    this.writeData(bonuses)
+    this.writeData(updatedBonuses)
     return true
   }
 

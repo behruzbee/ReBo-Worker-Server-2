@@ -37,7 +37,7 @@ class PenaltiesService {
       return false
     }
 
-    this.writeData(penalties)
+    this.writeData(updatedPenalties)
     return true
   }
 

@@ -29,7 +29,7 @@ router.post('/login', (req: Request, res: Response) => {
         .status(403)
         .json({ error: "username yoki password noto'g'ri!" })
 
-    const token = jwt.sign(user, process.env.JWT_SECRET_KEY || '', { expiresIn: '1h' })
+    const token = jwt.sign(user, process.env.JWT_SECRET_KEY || '', { expiresIn: '3h' })
     return res.status(201).json({ token })
   } catch (error) {
     res.status(500).json({ error: 'Failed to login user' })
