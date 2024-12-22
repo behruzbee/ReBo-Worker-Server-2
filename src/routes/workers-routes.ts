@@ -63,7 +63,7 @@ router.post(
     try {
       const addedWorker = workersService.addWorker({
         ...newWorker,
-        created_at: new Date().toISOString()
+        created_at: new Date().toISOString().slice(0, 16)
       })
       res.status(201).json(addedWorker)
     } catch (error) {

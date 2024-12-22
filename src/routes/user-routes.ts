@@ -91,7 +91,7 @@ router.post(
         username: newUser.username,
         password: hashPassword,
         status_index: newUser.status_index,
-        created_at: new Date().toISOString()
+        created_at: new Date().toISOString().slice(0, 16)
       }
       userService.addUser(preparedUser)
       const token = jwt.sign(preparedUser, process.env.JWT_SECRET_KEY || '', {

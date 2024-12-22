@@ -74,7 +74,7 @@ class TasksService {
     }
     
     task.completed_by = `${worker.name} ${worker.lastName}`
-    task.completed_at = new Date().toISOString()
+    task.completed_at = new Date().toISOString().slice(0, 16)
     task.status = 'completed'
     
     this.writeData(tasks)

@@ -1,13 +1,6 @@
 {
   "users": [
     {
-      "id": "3d52d74d-7a51-4808-973b-866df4995bd5",
-      "username": "behruz.baxtiyorov3",
-      "password": "$2b$10$MdWn6XeNAtdIs9STSZJZyu7GvmRBsXuVeMQW2l2zkvOI0CDvimvYy",
-      "status_index": 3,
-      "created_at": "2024-12-16T12:54:59.840Z"
-    },
-    {
       "id": "0fc9d53b-9870-49b6-a67a-b45922401765",
       "username": "behruz.baxtiyorov",
       "password": "$2b$10$qBZbhHcIQdp5G53eyWHpZOzu1Ur5iWZduhzAzwuSpYOd/b61/of7W",
@@ -15,11 +8,11 @@
       "created_at": "2024-12-17T10:19:30.734Z"
     },
     {
-      "id": "420584ca-446b-4d6f-92e0-fd1dd1775122",
-      "username": "behruz.baxtiyorov2",
-      "password": "$2b$10$XB/wXtqpH0.SZBw4P3JVj.XsMUzJ10YrCwkmG./yKy1igcPhudDjK",
+      "id": "945c8df4-8aee-4f17-bce0-5c8dd04d9938",
+      "username": "davron9906",
+      "password": "$2b$10$iPOFzu32ZCsuN5nEomU6p.TmE75nb6wYybDQ0pFw1HNBxc9ScYsdq",
       "status_index": 2,
-      "created_at": "2024-12-17T11:29:35.407Z"
+      "created_at": "2024-12-18T13:13:04.297Z"
     }
   ]
 }

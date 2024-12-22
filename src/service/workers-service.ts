@@ -66,12 +66,6 @@ class WorkerService {
     return true
   }
 
-  // Метод для получения работника по QR-коду
-  getWorkerByQrCode(qrCodeText: string): IWorker | undefined {
-    const workers = this.readData()
-    return workers.find((worker) => worker.qr_code_text === qrCodeText)
-  }
-
   // Метод для обновления статуса работника
   updateWorkerStatus(id: string, status_working: 'working' | 'not_working'): IWorker | undefined {
     const workers = this.readData()

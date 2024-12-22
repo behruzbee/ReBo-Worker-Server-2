@@ -42,6 +42,29 @@ router.post(
   }
 )
 
+router.post(
+  '/history/public',
+  // @ts-ignore
+  (req: Request, res: Response) => {
+    const newHistory: IHistory = req.body
+    newHistory.scan_time = new Date().toISOString().slice(0, 16)
+    const result = historySchema.safeParse(newHistory)
+    if (!result.success) {
+      return res.status(400).json({ errors: result.error.errors })
+    }
+
+    const addedHistory = historiesService.addHistory({
+      ...newHistory,
+      id: uuidV4()
+    })
+    if (addedHistory) {
+      res.status(201).json({ message: 'History added successfully' })
+    } else {
+      res.status(404).json({ message: 'Worker not found' })
+    }
+  }
+)
+
 router.delete(
   '/history/:id',
   // @ts-ignore

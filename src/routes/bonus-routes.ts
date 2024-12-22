@@ -29,7 +29,7 @@ router.post(
     }
 
     newBonus['id'] = uuidV4()
-    newBonus['time'] = new Date().toISOString()
+    newBonus['time'] = new Date().toISOString().slice(0, 16)
 
     const addedBonus = bonusesService.addBonus(newBonus)
     if (addedBonus) {
@@ -98,11 +98,7 @@ router.get(
     }
 
     const bonuses = bonusesService.getBonusesByWorkerId(workerId)
-    if (bonuses.length > 0) {
-      res.json(bonuses)
-    } else {
-      res.status(404).json({ error: 'No bonuses found for this worker' })
-    }
+    res.json(bonuses)
   }
 )
 

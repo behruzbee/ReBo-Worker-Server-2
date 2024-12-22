@@ -32,7 +32,7 @@ router.post(
     }
 
     newPenalty['id'] = uuidV4()
-    newPenalty['time'] = new Date().toISOString()
+    newPenalty['time'] = new Date().toISOString().slice(0, 16)
 
     const addedPenalty = penaltiesService.addPenalty(newPenalty)
     if (addedPenalty) {
@@ -64,31 +64,34 @@ router.delete(
   }
 )
 
-router.get('/penalties',
-    // @ts-ignore
-    checkToken,
-    checkPermission([
-      permissionIndex.admin,
-      permissionIndex.director,
-      permissionIndex.manager,
-      permissionIndex.user
-    ]), (req: Request, res: Response) => {
-  try {
-    const penalties = penaltiesService.getPenalties()
-    res.json(penalties)
-  } catch (error) {
-    res.status(500).json({ error: 'Failed to fetch penalties' })
+router.get(
+  '/penalties',
+  // @ts-ignore
+  checkToken,
+  checkPermission([
+    permissionIndex.admin,
+    permissionIndex.director,
+    permissionIndex.manager,
+    permissionIndex.user
+  ]),
+  (req: Request, res: Response) => {
+    try {
+      const penalties = penaltiesService.getPenalties()
+      res.json(penalties)
+    } catch (error) {
+      res.status(500).json({ error: 'Failed to fetch penalties' })
+    }
   }
-})
+)
 router.get(
   '/penalties/worker/:workerId',
-    // @ts-ignore
-    checkToken,
-    checkPermission([
-      permissionIndex.admin,
-      permissionIndex.director,
-      permissionIndex.manager,
-    ]),
+  // @ts-ignore
+  checkToken,
+  checkPermission([
+    permissionIndex.admin,
+    permissionIndex.director,
+    permissionIndex.manager
+  ]),
   // @ts-ignore
   (req: Request<{ workerId: string }>, res: Response) => {
     const workerId = req.params.workerId
@@ -98,11 +101,7 @@ router.get(
     }
 
     const penalties = penaltiesService.getPenaltiesByWorkerId(workerId)
-    if (penalties.length > 0) {
-      res.json(penalties)
-    } else {
-      res.status(404).json({ error: 'No penalties found for this worker' })
-    }
+    res.json(penalties)
   }
 )
 

@@ -26,7 +26,7 @@ router.post(
     const newTask: ITask = {
       id: uuidV4(),
       status: 'pending',
-      created_at: new Date().toISOString(),
+      created_at: new Date().toISOString().slice(0, 16),
       description: task.description,
       store_name: task.store
     }

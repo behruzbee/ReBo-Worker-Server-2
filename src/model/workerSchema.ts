@@ -23,7 +23,4 @@ export const workerSchema = z.object({
     .number()
     .int({ message: "Ishlangan minutlar butun son bo'lishi kerak!" })
     .nonnegative({ message: "Ishlangan minutlar manfiy bo'lmasligi kerak!" }),
-  qr_code_text: z.string({
-    required_error: "QR kod matni bo'sh bo'lmasligi kerak!"
-  })
 })
