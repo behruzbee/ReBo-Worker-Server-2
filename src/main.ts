@@ -15,7 +15,7 @@ dotenv.config()
 
 // Настройка CORS
 const corsOptions = {
-  origin: '*',
+  origin: 'https://rebo-worker-dashboard.netlify.app',
   methods: ['GET', 'POST', 'PATCH', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }
