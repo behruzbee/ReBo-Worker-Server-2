@@ -6,6 +6,7 @@ import { v4 as uuidV4 } from 'uuid'
 import { historySchema } from '../model/historySchema.js'
 import checkToken from '../helpers/checkToken.js'
 import checkPermission, { permissionIndex } from '../helpers/checkPermission.js'
+import { getTashkentTime } from '../helpers/getTashkentTime.js'
 
 const router = Router()
 const workersService = new WorkersService('./workers.json')
@@ -47,7 +48,7 @@ router.post(
   // @ts-ignore
   (req: Request, res: Response) => {
     const newHistory: IHistory = req.body
-    newHistory.scan_time = new Date().toISOString().slice(0, 16)
+    newHistory.scan_time = getTashkentTime()
     const result = historySchema.safeParse(newHistory)
     if (!result.success) {
       return res.status(400).json({ errors: result.error.errors })
