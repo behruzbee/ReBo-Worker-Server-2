@@ -59,9 +59,9 @@ router.post(
       id: uuidV4()
     })
     if (addedHistory) {
-      res.status(201).json({ message: 'History added successfully' })
+      res.status(201).json({ message: "Muvaffaqiyatli qo'shildi" })
     } else {
-      res.status(404).json({ message: 'Worker not found' })
+      res.status(404).json({ message: 'Hodim topilmadi yoki sizning statusingiz siz tanlagan xolatda!' })
     }
   }
 )

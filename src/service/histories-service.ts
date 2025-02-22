@@ -22,6 +22,11 @@ class HistoriesService {
     }
 
     const status_working = newHistory.status_type === 'enter' ? 'working' : 'not_working'
+    
+    if(status_working === worker.status_working) {
+      return false
+    }
+
 
     this.addHistoryEntry(newHistory)
     this.workersService.updateWorkerStatus(worker.id, status_working)

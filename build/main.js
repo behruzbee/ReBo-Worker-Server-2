@@ -11,9 +11,10 @@ import authRoutes from './routes/auth-routes.js';
 import userRoutes from './routes/user-routes.js';
 dotenv.config();
 const corsOptions = {
-    origin: 'https://rebo-worker-dashboard.netlify.app',
+    origin: ['https://rebo-worker-dashboard.netlify.app', 'https://rebo-client.netlify.app'],
     methods: ['GET', 'POST', 'PATCH', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization']
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true
 };
 const app = express();
 app.use(express.json());
